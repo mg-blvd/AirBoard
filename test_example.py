@@ -1,3 +1,4 @@
+@@ -0,0 +1,73 @@
 import cv2
 import numpy as np
 import pygame
@@ -14,7 +15,7 @@ window=pygame.display.set_mode((640,480))
 
 element = cv2.getStructuringElement (cv2.MORPH_CROSS, (3,3))
 
-blue_low=np.array([105,75,0],np.unint8)
+blue_low=np.array([105,75,0],np.uint8)
 
 blue_hi = np.array([135,255,255], np.unint8)
 
@@ -23,7 +24,7 @@ arlimit_h = 10000
 asp_1=0.33
 asp_h=2.33
 
-cap=cv2.VideoCapture(0)
+cap=cv2.VideoCapture()
 
 def preprocess(frame):
 	imblur=cv2.medianBlur(frame,3)
