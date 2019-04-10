@@ -52,7 +52,7 @@ def draw_path(point_2):
 	if point_2 == None:
 		return
 	point_1=point_2
-	pygame.draw.line(window,(0,255,0),point_1,point_2)
+	pygame.draw.line(window,(0,255,0),point_1,point_2, 5)
 	
 	pygame.display.flip()
 	return
