@@ -16,14 +16,14 @@ element = cv2.getStructuringElement (cv2.MORPH_CROSS, (3,3))
 
 blue_low=np.array([105,75,0],np.unint8)
 
-blue_hi = np.array([135,255,255], np.uint8)
+blue_hi = np.array([135,255,255], np.unint8)
 
 arlimit_l = 500
 arlimit_h = 10000
 asp_1=0.33
 asp_h=2.33
 
-cap=cv2.VideoCapture()
+cap=cv2.VideoCapture(0)
 
 def preprocess(frame):
 	imblur=cv2.medianBlur(frame,3)
@@ -57,20 +57,15 @@ def draw_path(point_2):
 	return
 while(True):
 	f,o_frame=cap.read()
+
+	o_frame = cv2.resize(o_frame,(640,480))
+	frame=cv2.flip(o_frame,1)
+	eroded=preprocess(frame)
+	cv2.imshow('Eroded', eroded)
+	frame,center=segment(eroded)
+	cv2.imshow('Video',frame)
+	draw_path(center)
 	ch=cv2.waitKey(50)
-	try:
-		o_frame = cv2.resize(o_frame,(640,480))
-		frame=cv2.flip(o_frame,1)
-		eroded=preprocess(frame)
-		cv2.imshow('Eroded', eroded)
-		frame,center=segment(eroded)
-		cv2.imshow('Video',frame)
-		draw_path(center)
-		ch=cv2.waitKey(50)
-	except Exception as e:
-		print(str(e))
-
-
 
 	if ch==27:
 		break
