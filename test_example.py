@@ -14,7 +14,7 @@ window=pygame.display.set_mode((640,480))
 
 element = cv2.getStructuringElement (cv2.MORPH_CROSS, (3,3))
 
-blue_low=np.array([105,75,0],np.uint8)
+blue_low=np.array([105,75,0],np.unint8)
 
 blue_hi = np.array([135,255,255], np.unint8)
 
