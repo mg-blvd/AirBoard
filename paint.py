@@ -33,12 +33,12 @@ class DrawingWindow():
         self.paintWindow = np.zeros((471,636,3)) + 255
         print("Window Crated")
 
-        cv2.namedWindow('Paint', cv2.WINDOW_AUTOSIZE)
 
         # Load the video
         self.camera = cv2.VideoCapture(0)
 
     def draw(self):
+        cv2.namedWindow('Paint', cv2.WINDOW_AUTOSIZE)
         # Keep looping
         while True:
             # Grab the current paintWindow
@@ -54,7 +54,7 @@ class DrawingWindow():
             self.blueMask = cv2.inRange(self.hsv, self.blueLower, self.blueUpper)
             self.blueMask = cv2.erode(self.blueMask, self.kernel, iterations=2)
             self.blueMask = cv2.morphologyEx(self.blueMask, cv2.MORPH_OPEN, self.kernel)
-            self.lueMask = cv2.dilate(self.blueMask,self.kernel, iterations=1)
+            self.blueMask = cv2.dilate(self.blueMask,self.kernel, iterations=1)
 
             # Find contours in the image
             ( self.cnts, _) = cv2.findContours(self.blueMask.copy(), cv2.RETR_EXTERNAL,
