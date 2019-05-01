@@ -1,36 +1,11 @@
-import numpy as np
-import cv2
-from pprint import pprint
+from PIL import Image
+im = Image.open('IMG_0283.jpg')
 
+orig_data = im.getdata()
+new_data = [ ]
 
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+for p in orig_data:
+    new_data.append((255-p[0], 255-p[1], 255-p[2]))
 
-eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_eye.xml")
-
-
-if face_cascade.empty():
-    print('WARNING: Cascade did not load')
-
-my_video = cv2.VideoCapture(0)
-
-while True:
-    ret, frame = my_video.read()
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-    faces = face_cascade.detectMultiScale(frame, 1.3, 5)
-
-    for (x,y,w,h) in faces:
-        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
-        roi_gray = gray[y:y+h, x:x+w]
-        roi_color = frame[y:y+h, x:x+w]
-        eyes = eye_cascade.detectMultiScale(roi_gray)
-        for (ex,ey,ew,eh) in eyes:
-            cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,255),2)
-
-
-    cv2.imshow("face and eyes", frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-my_video.release()
-cv2.destroyAllWindows()
+im.putdata(new_data)
+im.save('IMG_0283.jpg')
