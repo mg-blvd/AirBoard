@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 from collections import deque
-
+import uuid
 
 class DrawingWindow():
     def __init__(self):
@@ -31,12 +31,14 @@ class DrawingWindow():
 
         # Setup the Paint interface
         self.paintWindow = np.zeros((471,636,3)) + 255
-        print("Window Crated")
+        print("Window Created")
 
 
         # Load the video
         self.camera = cv2.VideoCapture(0)
 
+
+    
     def draw(self):
         cv2.namedWindow('Paint', cv2.WINDOW_AUTOSIZE)
         # Keep looping
@@ -106,6 +108,8 @@ class DrawingWindow():
 
             # Show the frame and the paintWindow image
             cv2.imshow("Tracking", self.frame)
+          
+
             cv2.imshow("Paint", self.paintWindow)
 
             # If the 'q' key is pressed, stop the loop
@@ -116,3 +120,12 @@ class DrawingWindow():
         self.camera.release()
         cv2.destroyAllWindows()
         print("nope")
+
+
+
+
+    def save1(self):
+        cv2.imwrite("images/image%d.jpg" % uuid.uuid4(), self.paintWindow)
+
+    def save2(self):
+        cv2.imwrite("images/image%d.jpg" % uuid.uuid4(), self.frame)
