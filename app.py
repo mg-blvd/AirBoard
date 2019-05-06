@@ -89,8 +89,11 @@ class Window(QWidget):
     @pyqtSlot()
     def voice_click(self):
         print("Voice Clicked!!")
+        mixer.music.load('audio/bell.wav')
+        mixer.music.play()
         text = self.voiceObject.send_text();
-       
+
+        
         print(text)
         
         if text.lower() == "change color to blue":
