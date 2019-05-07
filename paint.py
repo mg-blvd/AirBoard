@@ -30,7 +30,7 @@ class DrawingWindow():
         self.colorIndex = 0
 
         # Setup the Paint interface
-        self.paintWindow = np.zeros((471,636,3)) + 255
+        self.paintWindow = np.zeros((1000,2000,3)) + 255
         print("Window Created")
 
 

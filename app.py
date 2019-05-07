@@ -71,8 +71,8 @@ class Window(QWidget):
     @pyqtSlot()
     def on_click(self):
         print("Clicked!!")
-        self.our_window.paintWindow = np.zeros((471,636,3)) + 255
-        self.our_window.camera = cv2.VideoCapture(0)
+        #self.our_window.paintWindow = np.zeros((471,636,3)) + 255
+        #self.our_window.camera = cv2.VideoCapture(0)
         self.our_window.draw()
 
     
