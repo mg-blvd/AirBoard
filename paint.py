@@ -57,8 +57,7 @@ class DrawingWindow():
             self.blueMask = cv2.dilate(self.blueMask,self.kernel, iterations=1)
 
             # Find contours in the image
-            ( self.cnts, _) = cv2.findContours(self.blueMask.copy(), cv2.RETR_EXTERNAL,
-                                            cv2.CHAIN_APPROX_SIMPLE)
+            ( _, self.cnts, _) = cv2.findContours(self.blueMask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
             self.center = None
 
             # Check to see if any contours were found
@@ -116,3 +115,17 @@ class DrawingWindow():
         self.camera.release()
         cv2.destroyAllWindows()
         print("nope")
+
+    def erase_everything(self):
+        #erase all
+        self.bpoints = [deque(maxlen=512)]
+        self.gpoints = [deque(maxlen=512)]
+        self.rpoints = [deque(maxlen=512)]
+        self.ypoints = [deque(maxlen=512)]
+
+        self.bindex = 0
+        self.gindex = 0
+        self.rindex = 0
+        self.yindex = 0
+
+        self.paintWindow[67:,:,:] = 255
