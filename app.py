@@ -23,7 +23,6 @@ class Window(QWidget):
         #Welcome Message
         self.welcome = QLabel("Welcome!!\nClick on the button below to access the app.")
         self.color_message = QLabel("Change the color of the line.")
-        self.delete_message = QLabel("Clear the canvas.")
 
 
         #Button that takes you to the app.
@@ -38,11 +37,6 @@ class Window(QWidget):
         self.voice_button = QPushButton("Voice Command")
         self.voice_button.clicked.connect(self.voice_click)
 
-        #Button to erase the screen
-        self.erase_message = QLabel("Click this button to clear the canvas")
-        self.erase_button = QPushButton("Delete Current Drawing")
-        self.erase_button.clicked.connect(self.erase_click)
-
         #Colors Combobox
         options = ["blue", "green", "red", "yellow"]
         self.choose_color = QComboBox()
@@ -54,14 +48,10 @@ class Window(QWidget):
         self.vbox = QVBoxLayout()
         self.vbox.addWidget(self.welcome)
         self.vbox.addWidget(self.app_button)
-        self.vbox.addWidget(self.delete_message)
-        self.vbox.addWidget(self.delete_button)
         self.vbox.addWidget(self.color_message)
         self.vbox.addWidget(self.choose_color)
-        self.vbox.addWidget(self.erase_message)
-        self.vbox.addWidget(self.erase_button)
+        self.vbox.addWidget(self.delete_button)
         self.vbox.addWidget(self.voice_button)
-
         self.setLayout(self.vbox)
 
     @pyqtSlot()
@@ -104,10 +94,6 @@ class Window(QWidget):
 
     def clear_canvas(self):
         self.our_window.clear_everything()
-
-
-    def erase_click(self):
-        self.our_window.erase_everything()
 
 
 app = QApplication(sys.argv)
