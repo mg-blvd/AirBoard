@@ -5,10 +5,16 @@ import uuid
 
 class DrawingWindow():
     def __init__(self):
-        print("yep")
-        # Define the upper and lower boundaries for a color to be considered "Blue"
-        self.blueLower = np.array([100, 60, 60])
-        self.blueUpper = np.array([140, 255, 255])
+        
+        
+        
+  
+        
+        
+        
+        # Define the upper and lower boundaries for a color to be considered "PinkishRed"
+        self.redLower = np.array([170,50,100])
+        self.redUpper = np.array([180,255,255])
 
 
 
@@ -31,7 +37,6 @@ class DrawingWindow():
 
         # Setup the Paint interface
         self.paintWindow = np.zeros((1000,2000,3)) + 255
-        print("Window Created")
 
 
         # Load the video
@@ -52,14 +57,14 @@ class DrawingWindow():
             if not self.grabbed:
                 break
 
-            # Determine which pixels fall within the blue boundaries and then blur the binary image
-            self.blueMask = cv2.inRange(self.hsv, self.blueLower, self.blueUpper)
-            self.blueMask = cv2.erode(self.blueMask, self.kernel, iterations=2)
-            self.blueMask = cv2.morphologyEx(self.blueMask, cv2.MORPH_OPEN, self.kernel)
-            self.blueMask = cv2.dilate(self.blueMask,self.kernel, iterations=1)
+            # Determine which pixels fall within the red boundaries and then blur the binary image
+            self.redMask = cv2.inRange(self.hsv, self.redLower, self.redUpper)
+            self.redMask = cv2.erode(self.redMask, self.kernel, iterations=2)
+            self.redMask = cv2.morphologyEx(self.redMask, cv2.MORPH_OPEN, self.kernel)
+            self.redMask = cv2.dilate(self.redMask,self.kernel, iterations=1)
 
             # Find contours in the image
-            ( self.cnts, _) = cv2.findContours(self.blueMask.copy(), cv2.RETR_EXTERNAL,
+            ( self.cnts, _) = cv2.findContours(self.redMask.copy(), cv2.RETR_EXTERNAL,
                                             cv2.CHAIN_APPROX_SIMPLE)
             self.center = None
 
@@ -110,16 +115,17 @@ class DrawingWindow():
             cv2.imshow("Tracking", self.frame)
           
 
-            cv2.imshow("Paint", self.paintWindow)
+            #cv2.imshow("Paint", self.paintWindow)
 
             # If the 'q' key is pressed, stop the loop
             if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
 
+    
+
         # Cleanup the camera and close any open windows
         self.camera.release()
         cv2.destroyAllWindows()
-        print("nope")
 
 
 

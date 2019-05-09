@@ -9,9 +9,8 @@ import numpy as np
 import cv2
 import speech as VoiceRecord
 from collections import deque
+from pygame import mixer
 
-
-from pygame import mixer # Load the required library
 
 
 
@@ -70,7 +69,6 @@ class Window(QWidget):
 
     @pyqtSlot()
     def on_click(self):
-        print("Clicked!!")
         #self.our_window.paintWindow = np.zeros((471,636,3)) + 255
         #self.our_window.camera = cv2.VideoCapture(0)
         self.our_window.draw()
@@ -88,7 +86,7 @@ class Window(QWidget):
     
     @pyqtSlot()
     def voice_click(self):
-        print("Voice Clicked!!")
+        print("Voice Button Clicked!!")
         mixer.music.load('audio/bell.wav')
         mixer.music.play()
         text = self.voiceObject.send_text();
@@ -123,7 +121,7 @@ class Window(QWidget):
             mixer.music.load('audio/yellow.mp3')
             mixer.music.play()
 
-        elif text.lower() == "clear screen":
+        elif text.lower() == "erase everything":
             #erase all
             self.our_window.bpoints = [deque(maxlen=512)]
             self.our_window.gpoints = [deque(maxlen=512)]
