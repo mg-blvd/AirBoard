@@ -38,7 +38,7 @@ class DrawingWindow():
         self.camera = cv2.VideoCapture(0)
 
 
-    
+
     def draw(self):
         cv2.namedWindow('Paint', cv2.WINDOW_AUTOSIZE)
         # Keep looping
@@ -59,7 +59,7 @@ class DrawingWindow():
             self.blueMask = cv2.dilate(self.blueMask,self.kernel, iterations=1)
 
             # Find contours in the image
-            ( self.cnts, _) = cv2.findContours(self.blueMask.copy(), cv2.RETR_EXTERNAL,
+            (_, self.cnts, _) = cv2.findContours(self.blueMask.copy(), cv2.RETR_EXTERNAL,
                                             cv2.CHAIN_APPROX_SIMPLE)
             self.center = None
 
@@ -108,7 +108,7 @@ class DrawingWindow():
 
             # Show the frame and the paintWindow image
             cv2.imshow("Tracking", self.frame)
-          
+
 
             cv2.imshow("Paint", self.paintWindow)
 
@@ -129,3 +129,17 @@ class DrawingWindow():
 
     def save2(self):
         cv2.imwrite("images/image%d.jpg" % uuid.uuid4(), self.frame)
+
+    def clear_everything(self):
+        #erase all
+        self.bpoints = [deque(maxlen=512)]
+        self.gpoints = [deque(maxlen=512)]
+        self.rpoints = [deque(maxlen=512)]
+        self.ypoints = [deque(maxlen=512)]
+
+        self.bindex = 0
+        self.gindex = 0
+        self.rindex = 0
+        self.yindex = 0
+
+        self.paintWindow[67:,:,:] = 255

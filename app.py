@@ -1,5 +1,3 @@
-
-
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout,
                             QHBoxLayout, QPushButton, QComboBox, QLineEdit)
@@ -36,7 +34,11 @@ class Window(QWidget):
         self.app_button = QPushButton("Start Drawing!!")
         self.app_button.clicked.connect(self.on_click)
 
-        
+        #Button that deleates clear_everything
+        self.clear_button = QPushButton("Clear the Screen")
+        self.clear_button.clicked.connect(self.clean_screen)
+
+
         #Button to listen for voice commands
         self.voice_button = QPushButton("Voice Command")
         self.voice_button.clicked.connect(self.voice_click)
@@ -46,8 +48,8 @@ class Window(QWidget):
         self.save_button1.clicked.connect(self.save_image1)
         self.save_button2 = QPushButton("Save drawing with background")
         self.save_button2.clicked.connect(self.save_image2)
-        
-        
+
+
         #Colors Combobox
         options = ["blue", "green", "red", "yellow"]
         self.choose_color = QComboBox()
@@ -62,6 +64,7 @@ class Window(QWidget):
 
         self.vbox.addWidget(self.color_message)
         self.vbox.addWidget(self.choose_color)
+        self.vbox.addWidget(self.clear_button)
         self.vbox.addWidget(self.voice_button)
         self.vbox.addWidget(self.save_button1)
         self.vbox.addWidget(self.save_button2)
@@ -71,28 +74,26 @@ class Window(QWidget):
     @pyqtSlot()
     def on_click(self):
         print("Clicked!!")
+        self.our_window.clear_everything()
         self.our_window.paintWindow = np.zeros((471,636,3)) + 255
         self.our_window.camera = cv2.VideoCapture(0)
         self.our_window.draw()
 
-    
-    @pyqtSlot()
+
     def save_image1(self):
         self.our_window.save1()
-    
-    @pyqtSlot()
+
+
     def save_image2(self):
         self.our_window.save2()
-    
 
-    
-    @pyqtSlot()
+
     def voice_click(self):
         print("Voice Clicked!!")
         text = self.voiceObject.send_text();
-       
+
         print(text)
-        
+
         if text.lower() == "change color to blue":
             #self.our_window.colorIndex = 0;
             self.choose_color.setCurrentIndex(0);
@@ -100,14 +101,14 @@ class Window(QWidget):
             mixer.music.play()
 
 
-        
+
         elif text.lower() == "change color to green":
             #self.our_window.colorIndex = 1;
             self.choose_color.setCurrentIndex(1);
             mixer.music.load('audio/green.mp3')
             mixer.music.play()
 
-        
+
         elif text.lower() == "change color to red":
             #self.our_window.colorIndex = 2;
             self.choose_color.setCurrentIndex(2);
@@ -121,28 +122,16 @@ class Window(QWidget):
             mixer.music.play()
 
         elif text.lower() == "clear screen":
-            #erase all
-            self.our_window.bpoints = [deque(maxlen=512)]
-            self.our_window.gpoints = [deque(maxlen=512)]
-            self.our_windowrpoints = [deque(maxlen=512)]
-            self.our_window.ypoints = [deque(maxlen=512)]
-            
-            self.our_window.bindex = 0
-            self.our_window.gindex = 0
-            self.our_window.rindex = 0
-            self.our_window.yindex = 0
-            
-            self.our_window.paintWindow[67:,:,:] = 255
+            self.our_window.clear_everything()
             mixer.music.load('audio/erase.mp3')
             mixer.music.play()
 
+    def clean_screen(self):
+        self.our_window.clear_everything()
+        mixer.music.load('audio/erase.mp3')
+        mixer.music.play()
 
 
-
-
-                
-                            
-                            
     def color_chosen(self):
         new_color = self.choose_color.currentText()
         if(new_color == 'blue'):
@@ -158,16 +147,8 @@ class Window(QWidget):
 
 
 
+
 app = QApplication(sys.argv)
 main = Window()
 main.show()
 sys.exit(app.exec_())
-
-
-
-
-
-
-
-
-
