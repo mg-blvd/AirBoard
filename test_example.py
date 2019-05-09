@@ -16,14 +16,14 @@ element = cv2.getStructuringElement (cv2.MORPH_CROSS, (3,3))
 
 blue_low=np.array([105,75,0],np.uint8)
 
-blue_hi = np.array([135,255,255], np.unint8)
+blue_hi = np.array([135,255,255], np.uint8)
 
 arlimit_l = 500
 arlimit_h = 10000
 asp_1=0.33
 asp_h=2.33
 
-cap=cv2.VideoCapture()
+cap=cv2.VideoCapture(0)
 
 def preprocess(frame):
 	imblur=cv2.medianBlur(frame,3)
@@ -43,22 +43,25 @@ def segment(frT):
 			if aspect>asp_1 and aspect<asp_h:
 				cv2.rectangle(frame,(x,y),(x+w,y+h), bindcolor,2)
 				global center
-				center=(x+(w/2),y+(h/2))
+				center=[x+(w/2),y+(h/2)]
 				break
+
+	for value in center:
+		value = int(value)
 	return frame,center
 
 def draw_path(point_2):
 	global point_1
 	if point_2 == None:
 		return
-	point_1=point_2
-	pygame.draw.line(window,(0,255,0),point_1,point_2, 5)
+	point_1=[int(i) for i in point_2]
+	pygame.draw.circle(window,(255,0,0), point_1, 20)
 	
 	pygame.display.flip()
 	return
 while(True):
 	f,o_frame=cap.read()
-	ch=cv2.waitKey(50)
+	ch=cv2.waitKey(1)
 	try:
 		o_frame = cv2.resize(o_frame,(640,480))
 		frame=cv2.flip(o_frame,1)

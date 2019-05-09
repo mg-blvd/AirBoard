@@ -38,6 +38,10 @@ class Window(QWidget):
         self.voice_button = QPushButton("Voice Command")
         self.voice_button.clicked.connect(self.voice_click)
 
+        #Button to erase the screen
+        self.erase_message = QLabel("Click this button to clear the canvas")
+        self.erase_button = QPushButton("Delete Current Drawing")
+        self.erase_button.clicked.connect(self.erase_click)
 
         #Colors Combobox
         options = ["blue", "green", "red", "yellow"]
@@ -54,7 +58,10 @@ class Window(QWidget):
         self.vbox.addWidget(self.delete_button)
         self.vbox.addWidget(self.color_message)
         self.vbox.addWidget(self.choose_color)
+        self.vbox.addWidget(self.erase_message)
+        self.vbox.addWidget(self.erase_button)
         self.vbox.addWidget(self.voice_button)
+
         self.setLayout(self.vbox)
 
     @pyqtSlot()
@@ -97,6 +104,10 @@ class Window(QWidget):
 
     def clear_canvas(self):
         self.our_window.clear_everything()
+
+
+    def erase_click(self):
+        self.our_window.erase_everything()
 
 
 app = QApplication(sys.argv)

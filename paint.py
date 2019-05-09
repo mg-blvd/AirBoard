@@ -11,7 +11,6 @@ class DrawingWindow():
         self.blueUpper = np.array([140, 255, 255])
 
 
-
         # Define a 5x5 kernel for erosion and dilation
         self.kernel = np.ones((5, 5), np.uint8)
 
@@ -57,6 +56,7 @@ class DrawingWindow():
             self.blueMask = cv2.dilate(self.blueMask,self.kernel, iterations=1)
 
             # Find contours in the image
+
             (_ ,self.cnts, _) = cv2.findContours(self.blueMask.copy(), cv2.RETR_EXTERNAL,
                                             cv2.CHAIN_APPROX_SIMPLE)
             self.center = None
@@ -116,6 +116,7 @@ class DrawingWindow():
         self.camera.release()
         cv2.destroyAllWindows()
         print("nope")
+
 
     def clear_everything(self):
         #erase all
