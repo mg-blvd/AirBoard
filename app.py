@@ -58,10 +58,11 @@ class Window(QWidget):
         self.choose_color.currentIndexChanged.connect(self.color_chosen)
 
         #Slider for Brush Size
-        self.slider_name = QLabel("Brush Size: 1")
+        self.slider_name = QLabel("Brush Size: 2")
         self.slider = QSlider(Qt.Horizontal)
         self.slider.setMinimum(1)
         self.slider.setMaximum(50)
+        self.slider.setValue(2)
         self.slider.setFocusPolicy(Qt.StrongFocus)
         self.slider.setTickPosition(QSlider.TicksBothSides)
         self.slider.setTickInterval(10)
@@ -77,8 +78,8 @@ class Window(QWidget):
         self.vbox.addWidget(self.choose_color)
         self.vbox.addWidget(self.slider_name)
         self.vbox.addWidget(self.slider)
-        self.vbox.addWidget(self.clear_button)
         self.vbox.addWidget(self.voice_button)
+        self.vbox.addWidget(self.clear_button)
         self.vbox.addWidget(self.save_button1)
         self.vbox.addWidget(self.save_button2)
 
@@ -122,34 +123,29 @@ class Window(QWidget):
 
         
         print(text)
+        text = text.lower()
         
-        if "blue" in text.lower():
+        if "blue" in text:
             #self.our_window.colorIndex = 0;
             self.choose_color.setCurrentIndex(0);
             mixer.music.load('audio/blue.mp3')
-            mixer.music.play()
 
-
-        
-        elif "green" in text.lower():
+        elif "green" in text:
             #self.our_window.colorIndex = 1;
             self.choose_color.setCurrentIndex(1);
             mixer.music.load('audio/green.mp3')
-            mixer.music.play()
 
-        
-        elif "red" in text.lower():
+        elif "red" in text:
             #self.our_window.colorIndex = 2;
             self.choose_color.setCurrentIndex(2);
             mixer.music.load('audio/red.mp3')
-            mixer.music.play()
 
-        elif "yellow" in text.lower():
+        elif "yellow" in text:
             #self.our_window.colorIndex = 3;
             self.choose_color.setCurrentIndex(3);
             mixer.music.load('audio/yellow.mp3')
-            mixer.music.play()
-        elif "size" in text.lower():
+
+        elif "size" in text:
             split_text = text.split(' ')
             for substr in split_text:
                 if substr.isdigit():
@@ -158,10 +154,19 @@ class Window(QWidget):
                     self.slider_name.setText("Brush Size: " + str(new_size))
                     self.our_window.setBrush(new_size)
                     mixer.music.load('audio/{}.mp3'.format(substr))
-                    mixer.music.play()
+
+        elif "pause" in text or "stop" in text:
+            self.our_window.pause_draw()
+            print("Drawing paused")
+            mixer.music.load('audio/paused.mp3')
+
+        elif "play" in text:
+            self.our_window.play_draw()
+            print("Drawing playing now")
+            mixer.music.load('audio/play.mp3')
 
 
-        elif "clear" in text.lower():
+        elif "clear" in text:
             #erase all
             self.our_window.bpoints = [deque(maxlen=512)]
             self.our_window.gpoints = [deque(maxlen=512)]
@@ -175,9 +180,8 @@ class Window(QWidget):
             
             self.our_window.paintWindow[67:,:,:] = 255
             mixer.music.load('audio/erase.mp3')
-            mixer.music.play()
 
-
+        mixer.music.play()
 
                             
                             
@@ -200,12 +204,3 @@ app = QApplication(sys.argv)
 main = Window()
 main.show()
 sys.exit(app.exec_())
-
-
-
-
-
-
-
-
-

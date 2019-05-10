@@ -10,8 +10,10 @@ class DrawingWindow():
         self.blueUpper = np.array([140, 255, 255])
 
         # Define the brush size
-        self.brush_size = 1
+        self.brush_size = 2
 
+        # Control for drawing
+        self.toggle_drawing = True;
 
         # Define a 5x5 kernel for erosion and dilation
         self.kernel = np.ones((5, 5), np.uint8)
@@ -104,10 +106,10 @@ class DrawingWindow():
                     for k in range(1, len(self.points[i][j])):
                         if self.points[i][j][k - 1] is None or self.points[i][j][k] is None:
                             continue
-
+                        if not self.toggle_drawing:
+                            cv2.waitKey(3000)
                         cv2.line(self.frame, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], self.brush_size)
                         cv2.line(self.paintWindow, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], self.brush_size)
-                        #cv2.line(img, pt1, pt2, color[, thickness[, lineType[, shift]]])
 
             # Show the frame and the paintWindow image
             cv2.imshow("Tracking", self.frame)
@@ -133,3 +135,22 @@ class DrawingWindow():
 
     def save2(self):
         cv2.imwrite("images/image%d.jpg" % uuid.uuid4(), self.frame)
+
+    def clear_everything(self):
+        #erase all
+        self.bpoints = [deque(maxlen=512)]
+        self.gpoints = [deque(maxlen=512)]
+        self.rpoints = [deque(maxlen=512)]
+        self.ypoints = [deque(maxlen=512)]
+
+        self.bindex = 0
+        self.gindex = 0
+        self.rindex = 0
+        self.yindex = 0
+
+        self.paintWindow[67:,:,:] = 255
+
+    def pause_draw(self):
+        self.toggle_drawing = False
+    def play_draw(self):
+        self.toggle_drawing = True
