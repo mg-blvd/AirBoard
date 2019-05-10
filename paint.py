@@ -3,6 +3,7 @@ import cv2
 from collections import deque
 import uuid
 
+
 class DrawingWindow():
     def __init__(self):
         
@@ -16,17 +17,11 @@ class DrawingWindow():
         # Define a 5x5 kernel for erosion and dilation
         self.kernel = np.ones((5, 5), np.uint8)
 
+        self.points = []
+        self.points_size = []
 
-        # Setup deques to store separate colors in separate arrays
-        self.bpoints = [deque(maxlen=512)]
-        self.gpoints = [deque(maxlen=512)]
-        self.rpoints = [deque(maxlen=512)]
-        self.ypoints = [deque(maxlen=512)]
-
-        self.bindex = 0
-        self.gindex = 0
-        self.rindex = 0
-        self.yindex = 0
+        # Color indexes for blue, green, red, and yellow
+        self.colorIndexes = []
 
         self.colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (0, 255, 255)]
         self.colorIndex = 0
@@ -64,6 +59,8 @@ class DrawingWindow():
                                             cv2.CHAIN_APPROX_SIMPLE)
             self.center = None
 
+            self.setBrush(self.brush_size)
+            current_index = len(self.points) - 1
             # Check to see if any contours were found
             if len(self.cnts) > 0:
                 # Sort the contours and find the largest one
@@ -77,34 +74,38 @@ class DrawingWindow():
                 self.center = (int(self.M['m10'] / self.M['m00']), int(self.M['m01'] / self.M['m00']))
 
                 if self.colorIndex == 0:
-                    self.bpoints[self.bindex].appendleft(self.center)
+                    self.points[current_index][0][self.colorIndexes[current_index][0]].appendleft(self.center)
                 elif self.colorIndex == 1:
-                    self.gpoints[self.gindex].appendleft(self.center)
+                    self.points[current_index][1][self.colorIndexes[current_index][1]].appendleft(self.center)
                 elif self.colorIndex == 2:
-                    self.rpoints[self.rindex].appendleft(self.center)
+                    self.points[current_index][2][self.colorIndexes[current_index][2]].appendleft(self.center)
                 elif self.colorIndex == 3:
-                    self.ypoints[self.yindex].appendleft(self.center)
+                    self.points[current_index][3][self.colorIndexes[current_index][3]].appendleft(self.center)
             # Append the next deque when no contours are detected
             else:
-                self.bpoints.append(deque(maxlen=512))
-                self.bindex += 1
-                self.gpoints.append(deque(maxlen=512))
-                self.gindex += 1
-                self.rpoints.append(deque(maxlen=512))
-                self.rindex += 1
-                self.ypoints.append(deque(maxlen=512))
-                self.yindex += 1
+                self.points[current_index][0].append(deque(maxlen=512))
+                self.colorIndexes[current_index][0] += 1
+
+                self.points[current_index][1].append(deque(maxlen=512))
+                self.colorIndexes[current_index][1] += 1
+
+                self.points[current_index][2].append(deque(maxlen=512))
+                self.colorIndexes[current_index][2] += 1
+
+                self.points[current_index][3].append(deque(maxlen=512))
+                self.colorIndexes[current_index][3] += 1
 
 
             # Draw lines of all the colors (Blue, Green, Red and Yellow)
-            self.points = [self.bpoints, self.gpoints, self.rpoints, self.ypoints]
-            for i in range(len(self.points)):
-                for j in range(len(self.points[i])):
-                    for k in range(1, len(self.points[i][j])):
-                        if self.points[i][j][k - 1] is None or self.points[i][j][k] is None:
-                            continue
-                        cv2.line(self.frame, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], self.brush_size)
-                        cv2.line(self.paintWindow, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], self.brush_size)
+
+            for l in range(len(self.points)):
+                for i in range(len(self.points[l])):
+                    for j in range(len(self.points[l][i])):
+                        for k in range(1, len(self.points[l][i][j])):
+                            if self.points[l][i][j][k - 1] is None or self.points[l][i][j][k] is None:
+                                continue
+                            cv2.line(self.frame, self.points[l][i][j][k - 1], self.points[l][i][j][k], self.colors[i], self.points_size[l])
+                            cv2.line(self.paintWindow, self.points[l][i][j][k - 1], self.points[l][i][j][k], self.colors[i], self.points_size[l])
 
             # Show the frame and the paintWindow image
             cv2.imshow("Tracking", self.frame)
@@ -123,7 +124,11 @@ class DrawingWindow():
         cv2.destroyAllWindows()
 
     def setBrush(self, new_size):
-        self.brush_size = new_size
+        if self.brush_size != new_size or not self.points:
+            self.brush_size = new_size
+            self.points.append([[deque(maxlen=512)], [deque(maxlen=512)], [deque(maxlen=512)], [deque(maxlen=512)]])
+            self.points_size.append(self.brush_size)
+            self.colorIndexes.append([0,0,0,0])
 
     def save1(self):
         cv2.imwrite("images/image%d.jpg" % uuid.uuid4(), self.paintWindow)
@@ -133,14 +138,8 @@ class DrawingWindow():
 
     def clear_everything(self):
         #erase all
-        self.bpoints = [deque(maxlen=512)]
-        self.gpoints = [deque(maxlen=512)]
-        self.rpoints = [deque(maxlen=512)]
-        self.ypoints = [deque(maxlen=512)]
+        self.points.clear()
 
-        self.bindex = 0
-        self.gindex = 0
-        self.rindex = 0
-        self.yindex = 0
+        self.colorIndexes.clear()
 
         self.paintWindow[67:,:,:] = 255
