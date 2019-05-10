@@ -36,7 +36,7 @@ class Window(QWidget):
         self.app_button = QPushButton("Start Drawing!!")
         self.app_button.clicked.connect(self.on_click)
 
-        #Button that deleates clear_everything
+        #Button that deletes clear_everything
         self.clear_button = QPushButton("Clear the Screen")
         self.clear_button.clicked.connect(self.clean_screen)
         
@@ -73,11 +73,11 @@ class Window(QWidget):
         self.vbox = QVBoxLayout()
         self.vbox.addWidget(self.welcome)
         self.vbox.addWidget(self.app_button)
-
         self.vbox.addWidget(self.color_message)
         self.vbox.addWidget(self.choose_color)
         self.vbox.addWidget(self.slider_name)
         self.vbox.addWidget(self.slider)
+        self.vbox.addWidget(self.clear_button)
         self.vbox.addWidget(self.voice_button)
         self.vbox.addWidget(self.save_button1)
         self.vbox.addWidget(self.save_button2)
@@ -96,6 +96,12 @@ class Window(QWidget):
         slider_value = self.slider.value()
         self.slider_name.setText("Brush Size: " + str(slider_value))
         self.our_window.setBrush(slider_value)
+
+    @pyqtSlot()
+    def clean_screen(self):
+        self.our_window.clear_everything()
+        mixer.music.load('audio/erase.mp3')
+        mixer.music.play()
 
     @pyqtSlot()
     def save_image1(self):
