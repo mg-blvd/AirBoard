@@ -60,7 +60,7 @@ class Window(QWidget):
         self.slider = QSlider(Qt.Horizontal)
         self.slider.setMinimum(1)
         self.slider.setMaximum(50)
-        self.slider.setValue(0.1)
+        self.slider.setValue(2)
         self.slider.setFocusPolicy(Qt.StrongFocus)
         self.slider.setTickPosition(QSlider.TicksBothSides)
         self.slider.setTickInterval(10)
