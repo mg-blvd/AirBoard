@@ -10,6 +10,8 @@ class DrawingWindow():
         self.blueLower = np.array([100, 60, 60])
         self.blueUpper = np.array([140, 255, 255])
 
+        # Define the brush size
+        self.brush_size = 2
 
 
         # Define a 5x5 kernel for erosion and dilation
@@ -103,8 +105,9 @@ class DrawingWindow():
                     for k in range(1, len(self.points[i][j])):
                         if self.points[i][j][k - 1] is None or self.points[i][j][k] is None:
                             continue
-                        cv2.line(self.frame, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], 10)
-                        cv2.line(self.paintWindow, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], 2)
+
+                        cv2.line(self.frame, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], self.brush_size)
+                        cv2.line(self.paintWindow, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], self.brush_size)
                         #cv2.line(img, pt1, pt2, color[, thickness[, lineType[, shift]]])
 
             # Show the frame and the paintWindow image
@@ -123,7 +126,8 @@ class DrawingWindow():
         print("nope")
 
 
-
+    def setBrush(self, new_size):
+        self.brush_size = new_size
 
     def save1(self):
         cv2.imwrite("images/image%d.jpg" % uuid.uuid4(), self.paintWindow)

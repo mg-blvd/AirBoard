@@ -2,8 +2,8 @@
 
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout,
-                            QHBoxLayout, QPushButton, QComboBox, QLineEdit)
-from PyQt5.QtCore import pyqtSlot
+                            QHBoxLayout, QPushButton, QComboBox, QLineEdit, QSlider)
+from PyQt5.QtCore import pyqtSlot, Qt
 from paint import DrawingWindow
 import numpy as np
 import cv2
@@ -54,6 +54,17 @@ class Window(QWidget):
         self.choose_color.addItems(options)
         self.choose_color.currentIndexChanged.connect(self.color_chosen)
 
+        #Brush Size Slider
+        self.slider_name = QLabel("Brush Size: 2")
+        self.slider = QSlider(Qt.Horizontal)
+        self.slider.setMinimum(1)
+        self.slider.setMaximum(50)
+        self.slider.setFocusPolicy(Qt.StrongFocus)
+        self.slider.setTickPosition(QSlider.TicksBothSides)
+        self.slider.setTickInterval(10)
+        self.slider.setSingleStep(1)
+        self.slider.valueChanged.connect(self.on_slider_change)
+
 
         #Window Setup
         self.vbox = QVBoxLayout()
@@ -62,6 +73,8 @@ class Window(QWidget):
 
         self.vbox.addWidget(self.color_message)
         self.vbox.addWidget(self.choose_color)
+        self.vbox.addWidget(self.slider_name)
+        self.vbox.addWidget(self.slider)
         self.vbox.addWidget(self.voice_button)
         self.vbox.addWidget(self.save_button1)
         self.vbox.addWidget(self.save_button2)
@@ -75,7 +88,12 @@ class Window(QWidget):
         self.our_window.camera = cv2.VideoCapture(0)
         self.our_window.draw()
 
-    
+    @pyqtSlot()
+    def on_slider_change(self):
+        slider_value = self.slider.value()
+        self.slider_name.setText("Brush Size: " + str(slider_value))
+        self.our_window.setBrush(slider_value)
+
     @pyqtSlot()
     def save_image1(self):
         self.our_window.save1()
@@ -122,6 +140,15 @@ class Window(QWidget):
             self.choose_color.setCurrentIndex(3);
             mixer.music.load('audio/yellow.mp3')
             mixer.music.play()
+        elif "size" in text.lower():
+            split_text = text.split(' ')
+            for substr in split_text:
+                if substr.isdigit():
+                    new_size = int(substr)
+                    self.slider.setValue(new_size)
+                    self.slider_name.setText("Brush Size: " + str(new_size))
+                    self.our_window.setBrush(new_size)
+
 
         elif "clear" in text.lower():
             #erase all
@@ -141,9 +168,6 @@ class Window(QWidget):
 
 
 
-
-
-                
                             
                             
     def color_chosen(self):
