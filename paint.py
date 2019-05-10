@@ -5,7 +5,6 @@ import uuid
 
 class DrawingWindow():
     def __init__(self):
-        print("yep")
         # Define the upper and lower boundaries for a color to be considered "Blue"
         self.blueLower = np.array([100, 60, 60])
         self.blueUpper = np.array([140, 255, 255])
