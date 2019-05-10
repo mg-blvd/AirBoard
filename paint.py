@@ -6,17 +6,12 @@ import uuid
 class DrawingWindow():
     def __init__(self):
         
-        
-        
-  
-        
-        
-        
         # Define the upper and lower boundaries for a color to be considered "PinkishRed"
         self.redLower = np.array([170,50,220])
         self.redUpper = np.array([180,255,255])
 
-
+        # Define size of brush for drawing
+        self.brush_size = 2
 
         # Define a 5x5 kernel for erosion and dilation
         self.kernel = np.ones((5, 5), np.uint8)
@@ -108,8 +103,8 @@ class DrawingWindow():
                     for k in range(1, len(self.points[i][j])):
                         if self.points[i][j][k - 1] is None or self.points[i][j][k] is None:
                             continue
-                        cv2.line(self.frame, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], 2)
-                        cv2.line(self.paintWindow, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], 2)
+                        cv2.line(self.frame, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], self.brush_size)
+                        cv2.line(self.paintWindow, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], self.brush_size)
 
             # Show the frame and the paintWindow image
             cv2.imshow("Tracking", self.frame)
@@ -127,8 +122,8 @@ class DrawingWindow():
         self.camera.release()
         cv2.destroyAllWindows()
 
-
-
+    def setBrush(self, new_size):
+        self.brush_size = new_size
 
     def save1(self):
         cv2.imwrite("images/image%d.jpg" % uuid.uuid4(), self.paintWindow)

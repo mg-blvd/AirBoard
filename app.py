@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout,
-                            QHBoxLayout, QPushButton, QComboBox, QLineEdit)
-from PyQt5.QtCore import pyqtSlot
+                            QHBoxLayout, QPushButton, QComboBox, QLineEdit, QSlider)
+from PyQt5.QtCore import pyqtSlot, Qt
 from paint import DrawingWindow
 import numpy as np
 import cv2
