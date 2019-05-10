@@ -81,11 +81,13 @@ class Window(QWidget):
     @pyqtSlot()
     def save_image1(self):
         self.our_window.save1()
-
+        mixer.music.load('audio/save.mp3')
+        mixer.music.play()
     @pyqtSlot()
     def save_image2(self):
         self.our_window.save2()
-
+        mixer.music.load('audio/save.mp3')
+        mixer.music.play()
     @pyqtSlot()
     def voice_click(self):
         print("Voice Button Clicked!!")
