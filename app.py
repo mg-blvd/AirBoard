@@ -55,14 +55,26 @@ class Window(QWidget):
         self.choose_color.addItems(options)
         self.choose_color.currentIndexChanged.connect(self.color_chosen)
 
+        #Slider for Brush Size
+        self.slider_name = QLabel("Brush Size: 2")
+        self.slider = QSlider(Qt.Horizontal)
+        self.slider.setMinimum(1)
+        self.slider.setMaximum(50)
+        self.slider.setValue(2)
+        self.slider.setFocusPolicy(Qt.StrongFocus)
+        self.slider.setTickPosition(QSlider.TicksBothSides)
+        self.slider.setTickInterval(10)
+        self.slider.setSingleStep(1)
+        self.slider.valueChanged.connect(self.on_slider_change)
+
 
         #Window Setup
         self.vbox = QVBoxLayout()
         self.vbox.addWidget(self.welcome)
         self.vbox.addWidget(self.app_button)
-
         self.vbox.addWidget(self.color_message)
         self.vbox.addWidget(self.choose_color)
+        self.vbox.addWidget(self.)
         self.vbox.addWidget(self.clear_button)
         self.vbox.addWidget(self.voice_button)
         self.vbox.addWidget(self.save_button1)
