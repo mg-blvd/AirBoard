@@ -139,6 +139,20 @@ class Window(QWidget):
             mixer.music.load('audio/yellow.mp3')
             mixer.music.play()
 
+        # Changing Brush Size
+        elif "size" in text:
+            split_text = text.split(' ')
+            for substr in split_text:
+                if substr.isdigit():
+                    new_size = int(substr)
+                    if new_size <= 50 and new_size > 0:
+                        self.slider.setValue(new_size)
+                        self.slider_name.setText("Brush Size: " + str(new_size))
+                        self.our_window.setBrush(new_size)
+                        mixer.music.load('audio/{}.mp3'.format(substr))
+                    else:
+                        print(substr + " is an invalid size")
+
         elif "clear screen" in text.lower() or "clean" in text.lower():
             self.our_window.clear_everything()
             mixer.music.load('audio/erase.mp3')
