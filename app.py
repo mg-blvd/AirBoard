@@ -60,7 +60,7 @@ class Window(QWidget):
         self.slider = QSlider(Qt.Horizontal)
         self.slider.setMinimum(1)
         self.slider.setMaximum(50)
-        self.slider.setValue(2)
+        self.slider.setValue(0.1)
         self.slider.setFocusPolicy(Qt.StrongFocus)
         self.slider.setTickPosition(QSlider.TicksBothSides)
         self.slider.setTickInterval(10)
@@ -115,25 +115,27 @@ class Window(QWidget):
         text = self.voiceObject.send_text();
         print(text)
 
-        if "blue" in text.lower():
+        text = text.lower()
+
+        if "blue" in text:
             #self.our_window.colorIndex = 0;
             self.choose_color.setCurrentIndex(0);
             mixer.music.load('audio/blue.mp3')
             mixer.music.play()
 
-        elif "green" in text.lower():
+        elif "green" in text:
             #self.our_window.colorIndex = 1;
             self.choose_color.setCurrentIndex(1);
             mixer.music.load('audio/green.mp3')
             mixer.music.play()
 
-        elif "red" in text.lower():
+        elif "red" in text:
             #self.our_window.colorIndex = 2;
             self.choose_color.setCurrentIndex(2);
             mixer.music.load('audio/red.mp3')
             mixer.music.play()
 
-        elif "yellow" in text.lower():
+        elif "yellow" in text:
             #self.our_window.colorIndex = 3;
             self.choose_color.setCurrentIndex(3);
             mixer.music.load('audio/yellow.mp3')
@@ -150,10 +152,11 @@ class Window(QWidget):
                         self.slider_name.setText("Brush Size: " + str(new_size))
                         self.our_window.setBrush(new_size)
                         mixer.music.load('audio/{}.mp3'.format(substr))
+                        mixer.music.play()
                     else:
                         print(substr + " is an invalid size")
 
-        elif "clear screen" in text.lower() or "clean" in text.lower():
+        elif "clear screen" in text or "clean" in text:
             self.our_window.clear_everything()
             mixer.music.load('audio/erase.mp3')
             mixer.music.play()

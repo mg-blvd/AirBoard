@@ -60,7 +60,7 @@ class DrawingWindow():
             self.redMask = cv2.dilate(self.redMask,self.kernel, iterations=1)
 
             # Find contours in the image
-            ( self.cnts, _) = cv2.findContours(self.redMask.copy(), cv2.RETR_EXTERNAL,
+            (_, self.cnts, _) = cv2.findContours(self.redMask.copy(), cv2.RETR_EXTERNAL,
                                             cv2.CHAIN_APPROX_SIMPLE)
             self.center = None
 
