@@ -55,7 +55,7 @@ class Window(QWidget):
         self.choose_color.currentIndexChanged.connect(self.color_chosen)
 
         #Brush Size Slider
-        self.slider_name = QLabel("Brush Size: 2")
+        self.slider_name = QLabel("Brush Size: 1")
         self.slider = QSlider(Qt.Horizontal)
         self.slider.setMinimum(1)
         self.slider.setMaximum(50)
@@ -148,6 +148,8 @@ class Window(QWidget):
                     self.slider.setValue(new_size)
                     self.slider_name.setText("Brush Size: " + str(new_size))
                     self.our_window.setBrush(new_size)
+                    mixer.music.load('audio/{}.mp3'.format(substr))
+                    mixer.music.play()
 
 
         elif "clear" in text.lower():

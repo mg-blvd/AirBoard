@@ -11,7 +11,7 @@ class DrawingWindow():
         self.blueUpper = np.array([140, 255, 255])
 
         # Define the brush size
-        self.brush_size = 2
+        self.brush_size = 1
 
 
         # Define a 5x5 kernel for erosion and dilation
