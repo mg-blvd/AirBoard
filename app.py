@@ -74,7 +74,8 @@ class Window(QWidget):
         self.vbox.addWidget(self.app_button)
         self.vbox.addWidget(self.color_message)
         self.vbox.addWidget(self.choose_color)
-        self.vbox.addWidget(self.)
+        self.vbox.addWidget(self.slider_name)
+        self.vbox.addWidget(self.slider)
         self.vbox.addWidget(self.clear_button)
         self.vbox.addWidget(self.voice_button)
         self.vbox.addWidget(self.save_button1)
@@ -89,6 +90,12 @@ class Window(QWidget):
         self.our_window.paintWindow = np.zeros((471,636,3)) + 255
         self.our_window.camera = cv2.VideoCapture(0)
         self.our_window.draw()
+
+    @pyqtSlot()
+    def on_slider_change(self):
+        slider_value = self.slider.value()
+        self.slider_name.setText("Brush Size: " + str(slider_value))
+        self.our_window.setBrush(slider_value)
 
     @pyqtSlot()
     def save_image1(self):
