@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 from collections import deque
 import uuid
+from PIL import Image
 
 
 class DrawingWindow():
@@ -26,24 +27,52 @@ class DrawingWindow():
         self.colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (0, 255, 255)]
         self.colorIndex = 0
 
-        # Setup the Paint interface
-        self.paintWindow = np.zeros((1000,2000,3)) + 255
-
+        
+        self.width = 0
+        self.height = 0
 
         # Load the video
         self.camera = cv2.VideoCapture(0)
 
 
+        
+
+        # Setup the Paint interface, values here not important, will change in the Draw function
+        self.paintWindow = np.zeros((self.width,self.height,3)) + 255
+
+        
+        
+        
+
+
+        
+        
+
 
     def draw(self):
         cv2.namedWindow('Paint', cv2.WINDOW_AUTOSIZE)
         # Keep looping
+        
+
+        
         while True:
             # Grab the current paintWindow
             (self.grabbed, self.frame) = self.camera.read()
             self.frame = cv2.flip(self.frame, 1)
             self.hsv = cv2.cvtColor(self.frame, cv2.COLOR_BGR2HSV)
+            
+            
+            #Need to do a funky save image and get the size because opencv has no easy way to get resolution of video stream. Use that size of the image to set the white frame window and then replace the image with a white screen because noone wants a mugshot of themself
+            if(self.width == 0):
+                cv2.imwrite("images/temp.jpg", self.frame)
+                im = Image.open("images/temp.jpg")
+                self.width, self.height = im.size
+                # Setup the Paint interface
+                self.paintWindow = np.zeros((self.height,self.width,3)) + 255
+                cv2.imwrite("images/temp.jpg", self.paintWindow)
 
+
+            
             # Check to see if we have reached the end of the video
             if not self.grabbed:
                 break
@@ -55,9 +84,11 @@ class DrawingWindow():
             self.redMask = cv2.dilate(self.redMask,self.kernel, iterations=1)
 
             # Find contours in the image
+            
             # IMPORTANT: Depending on your machine, you may need 2 or 3 result parameters
             # for this function. Try (self.conts, _) or (_, self.conts, _) respectively if there is an issue.
             (_, self.cnts, _) = cv2.findContours(self.redMask.copy(), cv2.RETR_EXTERNAL,
+
                                             cv2.CHAIN_APPROX_SIMPLE)
             self.center = None
 
@@ -112,6 +143,10 @@ class DrawingWindow():
             # Show the frame and the paintWindow image
             cv2.imshow("Tracking", self.frame)
 
+                
+            # Setup the Paint interface
+            #self.paintWindow = np.zeros((self.windowRec[0],self.windowRect[1],3)) + 255
+        
 
             #cv2.imshow("Paint", self.paintWindow)
 
