@@ -87,7 +87,6 @@ class Window(QWidget):
     def on_click(self):
 
         self.our_window.clear_everything()
-        self.our_window.paintWindow = np.zeros((471,636,3)) + 255
         self.our_window.camera = cv2.VideoCapture(0)
         self.our_window.draw()
 
