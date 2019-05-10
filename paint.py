@@ -40,7 +40,7 @@ class DrawingWindow():
 
     
     def draw(self):
-        cv2.namedWindow('Paint', cv2.WINDOW_AUTOSIZE)
+        cv2.namedWindow('Paint', cv2.WINDOW_NORMAL)
         # Keep looping
         while True:
             # Grab the current paintWindow
@@ -59,7 +59,7 @@ class DrawingWindow():
             self.blueMask = cv2.dilate(self.blueMask,self.kernel, iterations=1)
 
             # Find contours in the image
-            ( self.cnts, _) = cv2.findContours(self.blueMask.copy(), cv2.RETR_EXTERNAL,
+            (_, self.cnts, _) = cv2.findContours(self.blueMask.copy(), cv2.RETR_EXTERNAL,
                                             cv2.CHAIN_APPROX_SIMPLE)
             self.center = None
 
@@ -103,8 +103,9 @@ class DrawingWindow():
                     for k in range(1, len(self.points[i][j])):
                         if self.points[i][j][k - 1] is None or self.points[i][j][k] is None:
                             continue
-                        cv2.line(self.frame, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], 2)
+                        cv2.line(self.frame, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], 10)
                         cv2.line(self.paintWindow, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], 2)
+                        #cv2.line(img, pt1, pt2, color[, thickness[, lineType[, shift]]])
 
             # Show the frame and the paintWindow image
             cv2.imshow("Tracking", self.frame)

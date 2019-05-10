@@ -96,7 +96,7 @@ class Window(QWidget):
         
         print(text)
         
-        if text.lower() == "change color to blue":
+        if "blue" in text.lower():
             #self.our_window.colorIndex = 0;
             self.choose_color.setCurrentIndex(0);
             mixer.music.load('audio/blue.mp3')
@@ -104,26 +104,26 @@ class Window(QWidget):
 
 
         
-        elif text.lower() == "change color to green":
+        elif "green" in text.lower():
             #self.our_window.colorIndex = 1;
             self.choose_color.setCurrentIndex(1);
             mixer.music.load('audio/green.mp3')
             mixer.music.play()
 
         
-        elif text.lower() == "change color to red":
+        elif "red" in text.lower():
             #self.our_window.colorIndex = 2;
             self.choose_color.setCurrentIndex(2);
             mixer.music.load('audio/red.mp3')
             mixer.music.play()
 
-        elif text.lower() == "change color to yellow":
+        elif "yellow" in text.lower():
             #self.our_window.colorIndex = 3;
             self.choose_color.setCurrentIndex(3);
             mixer.music.load('audio/yellow.mp3')
             mixer.music.play()
 
-        elif text.lower() == "clear screen":
+        elif "clear" in text.lower():
             #erase all
             self.our_window.bpoints = [deque(maxlen=512)]
             self.our_window.gpoints = [deque(maxlen=512)]
