@@ -21,6 +21,7 @@ class DrawingWindow():
         # Define a 5x5 kernel for erosion and dilation
         self.kernel = np.ones((5, 5), np.uint8)
 
+
         # Setup deques to store separate colors in separate arrays
         self.bpoints = [deque(maxlen=512)]
         self.gpoints = [deque(maxlen=512)]
@@ -43,7 +44,7 @@ class DrawingWindow():
         self.camera = cv2.VideoCapture(0)
 
 
-    
+
     def draw(self):
         cv2.namedWindow('Paint', cv2.WINDOW_AUTOSIZE)
         # Keep looping
@@ -70,8 +71,7 @@ class DrawingWindow():
 
             # Check to see if any contours were found
             if len(self.cnts) > 0:
-                # Sort the contours and find the largest one -- we
-                # will assume this contour correspondes to the area of the bottle cap
+                # Sort the contours and find the largest one
                 self.cnt = sorted(self.cnts, key = cv2.contourArea, reverse = True)[0]
                 # Get the radius of the enclosing circle around the found contour
                 ((self.x, self.y), self.radius) = cv2.minEnclosingCircle(self.cnt)
@@ -89,7 +89,7 @@ class DrawingWindow():
                     self.rpoints[self.rindex].appendleft(self.center)
                 elif self.colorIndex == 3:
                     self.ypoints[self.yindex].appendleft(self.center)
-            # Append the next deque when no contours are detected (i.e., bottle cap reversed)
+            # Append the next deque when no contours are detected
             else:
                 self.bpoints.append(deque(maxlen=512))
                 self.bindex += 1
@@ -113,7 +113,7 @@ class DrawingWindow():
 
             # Show the frame and the paintWindow image
             cv2.imshow("Tracking", self.frame)
-          
+
 
             #cv2.imshow("Paint", self.paintWindow)
 
@@ -135,3 +135,17 @@ class DrawingWindow():
 
     def save2(self):
         cv2.imwrite("images/image%d.jpg" % uuid.uuid4(), self.frame)
+
+    def clear_everything(self):
+        #erase all
+        self.bpoints = [deque(maxlen=512)]
+        self.gpoints = [deque(maxlen=512)]
+        self.rpoints = [deque(maxlen=512)]
+        self.ypoints = [deque(maxlen=512)]
+
+        self.bindex = 0
+        self.gindex = 0
+        self.rindex = 0
+        self.yindex = 0
+
+        self.paintWindow[67:,:,:] = 255
