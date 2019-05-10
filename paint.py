@@ -17,12 +17,12 @@ class DrawingWindow():
         # Define a 5x5 kernel for erosion and dilation
         self.kernel = np.ones((5, 5), np.uint8)
 
+        # List of layers for different point sizes and their colors
         self.points = []
         self.points_size = []
-
-        # Color indexes for blue, green, red, and yellow
         self.colorIndexes = []
 
+        # RGB values of Red, Blue, Green, and Yellow
         self.colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (0, 255, 255)]
         self.colorIndex = 0
 
@@ -96,7 +96,7 @@ class DrawingWindow():
                 self.colorIndexes[current_index][3] += 1
 
 
-            # Draw lines of all the colors (Blue, Green, Red and Yellow)
+            # Draw lines of all the colors (Blue, Green, Red and Yellow), as well as lines of different sizes
 
             for l in range(len(self.points)):
                 for i in range(len(self.points[l])):
@@ -124,6 +124,7 @@ class DrawingWindow():
         cv2.destroyAllWindows()
 
     def setBrush(self, new_size):
+        # If the brush size has changed or there are no layers: add a new layer
         if self.brush_size != new_size or not self.points:
             self.brush_size = new_size
             self.points.append([[deque(maxlen=512)], [deque(maxlen=512)], [deque(maxlen=512)], [deque(maxlen=512)]])
@@ -137,9 +138,8 @@ class DrawingWindow():
         cv2.imwrite("images/image%d.jpg" % uuid.uuid4(), self.frame)
 
     def clear_everything(self):
-        #erase all
+        #erase all - clears all layers
         self.points.clear()
-
         self.colorIndexes.clear()
 
         self.paintWindow[67:,:,:] = 255

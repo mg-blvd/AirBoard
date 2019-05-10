@@ -21,41 +21,41 @@ class Window(QWidget):
         self.our_window = DrawingWindow()
         self.voiceObject = VoiceRecord.VoiceRecord();
 
-        #Window Title
+        # Window Title
         self.setWindowTitle("Home Page")
 
-        #Welcome Message
+        # Welcome Message
         self.welcome = QLabel("Welcome!!\nClick on the button below to access the app.")
         self.color_message = QLabel("Change the color of the line.")
 
 
-        #Button that takes you to the app.
+        # Button that takes you to the app.
         self.app_button = QPushButton("Start Drawing!!")
         self.app_button.clicked.connect(self.on_click)
 
-        #Button that deleates clear_everything
+        # Button that deleates clear_everything
         self.clear_button = QPushButton("Clear the Screen")
         self.clear_button.clicked.connect(self.clean_screen)
 
 
-        #Button to listen for voice commands
+        # Button to listen for voice commands
         self.voice_button = QPushButton("Voice Command")
         self.voice_button.clicked.connect(self.voice_click)
 
-        #Button to listen for save
+        # Button to listen for save
         self.save_button1 = QPushButton("Save drawing")
         self.save_button1.clicked.connect(self.save_image1)
         self.save_button2 = QPushButton("Save drawing with background")
         self.save_button2.clicked.connect(self.save_image2)
 
 
-        #Colors Combobox
+        # Colors Combobox
         options = ["blue", "green", "red", "yellow"]
         self.choose_color = QComboBox()
         self.choose_color.addItems(options)
         self.choose_color.currentIndexChanged.connect(self.color_chosen)
 
-        #Slider for Brush Size
+        # Slider for Brush Size
         self.slider_name = QLabel("Brush Size: 2")
         self.slider = QSlider(Qt.Horizontal)
         self.slider.setMinimum(1)
@@ -68,7 +68,7 @@ class Window(QWidget):
         self.slider.valueChanged.connect(self.on_slider_change)
 
 
-        #Window Setup
+        # Window Setup
         self.vbox = QVBoxLayout()
         self.vbox.addWidget(self.welcome)
         self.vbox.addWidget(self.app_button)
@@ -141,10 +141,9 @@ class Window(QWidget):
             mixer.music.load('audio/yellow.mp3')
             mixer.music.play()
 
-        # Changing Brush Size
+        # Changing Brush Size: Say size and a number between 1 and 50 in the same sentence
         elif "size" in text:
-            split_text = text.split(' ')
-            for substr in split_text:
+            for substr in text.split(' '):
                 if substr.isdigit():
                     new_size = int(substr)
                     if new_size <= 50 and new_size > 0:
@@ -155,8 +154,8 @@ class Window(QWidget):
                         mixer.music.play()
                     else:
                         print(substr + " is an invalid size")
-
-        elif "clear screen" in text or "clean" in text:
+        # Clears all drawings
+        elif "clear" in text or "clean" in text:
             self.our_window.clear_everything()
             mixer.music.load('audio/erase.mp3')
             mixer.music.play()
