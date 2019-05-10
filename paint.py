@@ -107,7 +107,7 @@ class DrawingWindow():
                         if self.points[i][j][k - 1] is None or self.points[i][j][k] is None:
                             continue
                         if not self.toggle_drawing:
-                            cv2.waitKey(3000)
+                            cv2.waitKey(10000)
                         cv2.line(self.frame, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], self.brush_size)
                         cv2.line(self.paintWindow, self.points[i][j][k - 1], self.points[i][j][k], self.colors[i], self.brush_size)
 

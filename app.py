@@ -124,7 +124,7 @@ class Window(QWidget):
         
         print(text)
         text = text.lower()
-        
+        # Changing colors
         if "blue" in text:
             #self.our_window.colorIndex = 0;
             self.choose_color.setCurrentIndex(0);
@@ -145,16 +145,21 @@ class Window(QWidget):
             self.choose_color.setCurrentIndex(3);
             mixer.music.load('audio/yellow.mp3')
 
+        # Changing Brush Size
         elif "size" in text:
             split_text = text.split(' ')
             for substr in split_text:
                 if substr.isdigit():
                     new_size = int(substr)
-                    self.slider.setValue(new_size)
-                    self.slider_name.setText("Brush Size: " + str(new_size))
-                    self.our_window.setBrush(new_size)
-                    mixer.music.load('audio/{}.mp3'.format(substr))
-
+                    if new_size <= 50 and new_size > 0:
+                        self.slider.setValue(new_size)
+                        self.slider_name.setText("Brush Size: " + str(new_size))
+                        self.our_window.setBrush(new_size)
+                        mixer.music.load('audio/{}.mp3'.format(substr))
+                    else:
+                        print(substr + " is an invalid size")
+        
+        # Pausing/Playing video feed/drawing                
         elif "pause" in text or "stop" in text:
             self.our_window.pause_draw()
             print("Drawing paused")
@@ -166,7 +171,7 @@ class Window(QWidget):
             mixer.music.load('audio/play.mp3')
 
 
-        elif "clear" in text:
+        elif "clear" in text or "erase" in text:
             #erase all
             self.our_window.bpoints = [deque(maxlen=512)]
             self.our_window.gpoints = [deque(maxlen=512)]
@@ -180,6 +185,9 @@ class Window(QWidget):
             
             self.our_window.paintWindow[67:,:,:] = 255
             mixer.music.load('audio/erase.mp3')
+        else:
+            print("Invalid input")
+            return
 
         mixer.music.play()
 
