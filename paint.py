@@ -13,7 +13,7 @@ class DrawingWindow():
         
         
         # Define the upper and lower boundaries for a color to be considered "PinkishRed"
-        self.redLower = np.array([170,50,100])
+        self.redLower = np.array([170,50,220])
         self.redUpper = np.array([180,255,255])
 
 
