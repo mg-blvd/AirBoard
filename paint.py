@@ -5,7 +5,6 @@ import uuid
 
 class DrawingWindow():
     def __init__(self):
-        print("yep")
         # Define the upper and lower boundaries for a color to be considered "Blue"
         self.blueLower = np.array([100, 60, 60])
         self.blueUpper = np.array([140, 255, 255])
@@ -14,6 +13,7 @@ class DrawingWindow():
 
         # Define a 5x5 kernel for erosion and dilation
         self.kernel = np.ones((5, 5), np.uint8)
+
 
         # Setup deques to store separate colors in separate arrays
         self.bpoints = [deque(maxlen=512)]
@@ -65,8 +65,7 @@ class DrawingWindow():
 
             # Check to see if any contours were found
             if len(self.cnts) > 0:
-                # Sort the contours and find the largest one -- we
-                # will assume this contour correspondes to the area of the bottle cap
+                # Sort the contours and find the largest one
                 self.cnt = sorted(self.cnts, key = cv2.contourArea, reverse = True)[0]
                 # Get the radius of the enclosing circle around the found contour
                 ((self.x, self.y), self.radius) = cv2.minEnclosingCircle(self.cnt)
@@ -84,7 +83,7 @@ class DrawingWindow():
                     self.rpoints[self.rindex].appendleft(self.center)
                 elif self.colorIndex == 3:
                     self.ypoints[self.yindex].appendleft(self.center)
-            # Append the next deque when no contours are detected (i.e., bottle cap reversed)
+            # Append the next deque when no contours are detected
             else:
                 self.bpoints.append(deque(maxlen=512))
                 self.bindex += 1
