@@ -79,15 +79,15 @@ class Window(QWidget):
         self.our_window.camera = cv2.VideoCapture(0)
         self.our_window.draw()
 
-
+    @pyqtSlot()
     def save_image1(self):
         self.our_window.save1()
 
-
+    @pyqtSlot()
     def save_image2(self):
         self.our_window.save2()
 
-
+    @pyqtSlot()
     def voice_click(self):
         print("Voice Clicked!!")
         text = self.voiceObject.send_text();
@@ -100,14 +100,11 @@ class Window(QWidget):
             mixer.music.load('audio/blue.mp3')
             mixer.music.play()
 
-
-
         elif "green" in text.lower():
             #self.our_window.colorIndex = 1;
             self.choose_color.setCurrentIndex(1);
             mixer.music.load('audio/green.mp3')
             mixer.music.play()
-
 
         elif "red" in text.lower():
             #self.our_window.colorIndex = 2;
@@ -121,17 +118,18 @@ class Window(QWidget):
             mixer.music.load('audio/yellow.mp3')
             mixer.music.play()
 
-        elif "clear screen" in text.lower():
+        elif "clear screen" in text.lower() or "clean" in text.lower():
             self.our_window.clear_everything()
             mixer.music.load('audio/erase.mp3')
             mixer.music.play()
 
+    @pyqtSlot()
     def clean_screen(self):
         self.our_window.clear_everything()
         mixer.music.load('audio/erase.mp3')
         mixer.music.play()
 
-
+    @pyqtSlot()    
     def color_chosen(self):
         new_color = self.choose_color.currentText()
         if(new_color == 'blue'):
