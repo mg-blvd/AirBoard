@@ -87,9 +87,17 @@ class DrawingWindow():
             
             # IMPORTANT: Depending on your machine, you may need 2 or 3 result parameters
             # for this function. Try (self.conts, _) or (_, self.conts, _) respectively if there is an issue.
-            (_, self.cnts, _) = cv2.findContours(self.redMask.copy(), cv2.RETR_EXTERNAL,
+            try:
+                (_, self.cnts, _) = cv2.findContours(self.redMask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            except:
+                (self.cnts, _) = cv2.findContours(self.redMask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-                                            cv2.CHAIN_APPROX_SIMPLE)
+            
+                    
+                    
+        
+        
+                                            
             self.center = None
 
             self.setBrush(self.brush_size)
