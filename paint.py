@@ -180,5 +180,5 @@ class DrawingWindow():
         #erase all - clears all layers
         self.points.clear()
         self.colorIndexes.clear()
-
+        self.points_size.clear()
         self.paintWindow[67:,:,:] = 255
