@@ -80,7 +80,7 @@ class Window(QWidget):
 
         #Create the coloring options section
         self.coloring_options = QVBoxLayout()
-        self.coloring_options.addWidget(self.color_message)
+        self.coloring_options.addWidget(self.drawing_message)
         self.coloring_options.addWidget(self.color_message)
         self.coloring_options.addWidget(self.choose_color)
         self.coloring_options.addWidget(self.slider_name)
