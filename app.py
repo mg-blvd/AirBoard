@@ -85,15 +85,15 @@ class Window(QWidget):
 
     @pyqtSlot()
     def on_click(self):
-
         self.our_window.clear_everything()
+        self.our_window.setBrush(self.slider.value())
         self.our_window.camera = cv2.VideoCapture(0)
         self.our_window.draw()
 
     @pyqtSlot()
     def on_slider_change(self):
         slider_value = self.slider.value()
-        self.slider_name.setText("Brush Size: " + str(slider_value))
+        self.slider_name.setText(f"Brush Size: {slider_value}")
         self.our_window.setBrush(slider_value)
 
     @pyqtSlot()
@@ -165,7 +165,7 @@ class Window(QWidget):
         mixer.music.load('audio/erase.mp3')
         mixer.music.play()
 
-    @pyqtSlot()    
+    @pyqtSlot()
     def color_chosen(self):
         new_color = self.choose_color.currentText()
         if(new_color == 'blue'):
