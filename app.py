@@ -24,6 +24,8 @@ class Window(QWidget):
 
         # Window Title
         self.setWindowTitle("Home Page")
+        self.drawing_message = QLabel("These are the coloring options:")
+        self.other_message = QLabel("These are all the other options:")
 
         #Thread for voice commands
         self.voice_thread = threading.Thread(target=self.voice_control)
@@ -76,21 +78,33 @@ class Window(QWidget):
         self.close_button.clicked.connect(self.close_the_wins)
 
 
+        #Create the coloring options section
+        self.coloring_options = QVBoxLayout()
+        self.coloring_options.addWidget(self.color_message)
+        self.coloring_options.addWidget(self.color_message)
+        self.coloring_options.addWidget(self.choose_color)
+        self.coloring_options.addWidget(self.slider_name)
+        self.coloring_options.addWidget(self.slider)
+        self.coloring_options.addWidget(self.clear_button)
+
+        #Create other options section
+        self.other_options = QVBoxLayout()
+        self.other_options.addWidget(self.other_message)
+        self.other_options.addWidget(self.voice_button)
+        self.other_options.addWidget(self.save_button1)
+        self.other_options.addWidget(self.save_button2)
+        self.other_options.addWidget(self.close_button)
+
+        #Put the two option squares side by side
+        self.hbox = QHBoxLayout()
+        self.hbox.addLayout(self.coloring_options)
+        self.hbox.addLayout(self.other_options)
 
         # Window Setup
         self.vbox = QVBoxLayout()
         self.vbox.addWidget(self.welcome)
         self.vbox.addWidget(self.app_button)
-        self.vbox.addWidget(self.color_message)
-        self.vbox.addWidget(self.choose_color)
-        self.vbox.addWidget(self.slider_name)
-        self.vbox.addWidget(self.slider)
-        self.vbox.addWidget(self.clear_button)
-        self.vbox.addWidget(self.voice_button)
-        self.vbox.addWidget(self.save_button1)
-        self.vbox.addWidget(self.save_button2)
-        self.vbox.addWidget(self.close_button)
-
+        self.vbox.addLayout(self.hbox)
         self.setLayout(self.vbox)
 
     @pyqtSlot()
