@@ -67,6 +67,11 @@ class Window(QWidget):
         self.slider.setSingleStep(1)
         self.slider.valueChanged.connect(self.on_slider_change)
 
+        #Close windows Button
+        self.close_button = QPushButton("Close the Windows")
+        self.close_button.clicked.connect(self.close_the_wins)
+
+
 
         # Window Setup
         self.vbox = QVBoxLayout()
@@ -80,13 +85,13 @@ class Window(QWidget):
         self.vbox.addWidget(self.voice_button)
         self.vbox.addWidget(self.save_button1)
         self.vbox.addWidget(self.save_button2)
+        self.vbox.addWidget(self.close_button)
 
         self.setLayout(self.vbox)
 
     @pyqtSlot()
     def on_click(self):
-        self.our_window.clear_everything()
-        self.our_window.setBrush(self.slider.value())
+        self.our_window.close_wins = False
         self.our_window.camera = cv2.VideoCapture(0)
         self.our_window.draw()
 
@@ -178,6 +183,11 @@ class Window(QWidget):
 
         else:
             self.our_window.colorIndex = 3
+
+    def close_the_wins(self):
+        self.our_window.close_wins = True
+        self.our_window.clear_everything()
+
 
 
 

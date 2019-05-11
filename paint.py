@@ -7,7 +7,8 @@ from PIL import Image
 
 class DrawingWindow():
     def __init__(self):
-
+        #Flag that will allow is to close the windows
+        self.close_wins = False
         # Define the upper and lower boundaries for a color to be considered "PinkishRed"
         self.redLower = np.array([170,50,220])
         self.redUpper = np.array([180,255,255])
@@ -153,7 +154,7 @@ class DrawingWindow():
 
 
             # If the 'q' key is pressed, stop the loop
-            if cv2.waitKey(1) & 0xFF == ord("q"):
+            if cv2.waitKey(1) & self.close_wins:
                 break
 
 
