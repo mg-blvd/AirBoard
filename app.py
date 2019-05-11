@@ -32,6 +32,7 @@ class Window(QWidget):
 
         # Welcome Message
         self.welcome = QLabel("Welcome!!\nClick on the button below to access the app.")
+        self.welcome.setAlignment(Qt.AlignCenter)
         self.color_message = QLabel("Change the color of the line.")
 
 
