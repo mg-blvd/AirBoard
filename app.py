@@ -207,5 +207,8 @@ class Window(QWidget):
 
 app = QApplication(sys.argv)
 main = Window()
+p =  main.palette()
+p.setColor(main.backgroundRole(), Qt.white)
+main.setPalette(p)
 main.show()
 sys.exit(app.exec_())
