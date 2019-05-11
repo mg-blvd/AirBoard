@@ -5,6 +5,7 @@ from PyQt5.QtCore import pyqtSlot, Qt
 from paint import DrawingWindow
 import numpy as np
 import cv2
+import threading
 import speech as VoiceRecord
 from collections import deque
 from pygame import mixer
@@ -23,6 +24,9 @@ class Window(QWidget):
 
         # Window Title
         self.setWindowTitle("Home Page")
+
+        #Thread for voice commands
+        self.voice_thread = threading.Thread(target=self.voice_control)
 
         # Welcome Message
         self.welcome = QLabel("Welcome!!\nClick on the button below to access the app.")
@@ -113,6 +117,28 @@ class Window(QWidget):
         mixer.music.play()
     @pyqtSlot()
     def voice_click(self):
+        self.voice_thread.start()
+        self.voice_thread = threading.Thread(target=self.voice_control)
+
+    @pyqtSlot()
+    def color_chosen(self):
+        new_color = self.choose_color.currentText()
+        if(new_color == 'blue'):
+            self.our_window.colorIndex = 0
+        elif new_color == 'green':
+            self.our_window.colorIndex = 1
+
+        elif new_color == 'red':
+            self.our_window.colorIndex = 2
+
+        else:
+            self.our_window.colorIndex = 3
+
+    def close_the_wins(self):
+        self.our_window.close_wins = True
+        self.our_window.clear_everything()
+
+    def voice_control(self):
         print("Voice Button Clicked!!")
         mixer.music.load('audio/bell.wav')
         mixer.music.play()
@@ -164,30 +190,17 @@ class Window(QWidget):
             mixer.music.load('audio/erase.mp3')
             mixer.music.play()
 
+        elif "close" in text:
+            self.close_the_wins()
+
+        elif "open" in text:
+            self.on_click()
+
     @pyqtSlot()
     def clean_screen(self):
         self.our_window.clear_everything()
         mixer.music.load('audio/erase.mp3')
         mixer.music.play()
-
-    @pyqtSlot()
-    def color_chosen(self):
-        new_color = self.choose_color.currentText()
-        if(new_color == 'blue'):
-            self.our_window.colorIndex = 0
-        elif new_color == 'green':
-            self.our_window.colorIndex = 1
-
-        elif new_color == 'red':
-            self.our_window.colorIndex = 2
-
-        else:
-            self.our_window.colorIndex = 3
-
-    def close_the_wins(self):
-        self.our_window.close_wins = True
-        self.our_window.clear_everything()
-
 
 
 
