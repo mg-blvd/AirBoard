@@ -1,8 +1,6 @@
-Intro for stuff.
+AirBoard
+========
 
-
-
-Real Time Drawing
 
 Features
 - Draw with a wand onto the screen
