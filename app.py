@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout,
                             QHBoxLayout, QPushButton, QComboBox, QLineEdit, QSlider)
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import pyqtSlot, Qt
 from paint import DrawingWindow
 import numpy as np
@@ -24,15 +25,15 @@ class Window(QWidget):
         self.voiceObject = VoiceRecord.VoiceRecord();
 
         # Window Title
-        self.setWindowTitle("Home Page")
-        self.drawing_message = QLabel("These are the coloring options:")
-        self.other_message = QLabel("These are all the other options:")
+        self.setWindowTitle("AirBoard")
+        # self.drawing_message = QLabel("These are the coloring options:")
+        # self.other_message = QLabel("These are all the other options:")
 
         #Thread for voice commands
         self.voice_thread = threading.Thread(target=self.voice_control)
 
         # Welcome Message
-        self.welcome = QLabel("Welcome!!\nClick on the button below to access the app.")
+        self.welcome = QLabel("Welcome to:")
         self.welcome.setAlignment(Qt.AlignCenter)
         self.color_message = QLabel("Change the color of the line.")
 
@@ -63,6 +64,11 @@ class Window(QWidget):
         self.choose_color.addItems(options)
         self.choose_color.currentIndexChanged.connect(self.color_chosen)
 
+        #Add image pixmap
+        self.airboard_image = QLabel()
+        self.airboard_image.setPixmap(QPixmap('AirBoardLogo.png'))
+        self.airboard_image.setAlignment(Qt.AlignCenter)
+
         # Slider for Brush Size
         self.slider_name = QLabel("Brush Size: 2")
         self.slider = QSlider(Qt.Horizontal)
@@ -82,7 +88,7 @@ class Window(QWidget):
 
         #Create the coloring options section
         self.coloring_options = QVBoxLayout()
-        self.coloring_options.addWidget(self.drawing_message)
+        # self.coloring_options.addWidget(self.drawing_message)
         self.coloring_options.addWidget(self.color_message)
         self.coloring_options.addWidget(self.choose_color)
         self.coloring_options.addWidget(self.slider_name)
@@ -91,7 +97,7 @@ class Window(QWidget):
 
         #Create other options section
         self.other_options = QVBoxLayout()
-        self.other_options.addWidget(self.other_message)
+        # self.other_options.addWidget(self.other_message)
         self.other_options.addWidget(self.voice_button)
         self.other_options.addWidget(self.save_button1)
         self.other_options.addWidget(self.save_button2)
@@ -105,6 +111,7 @@ class Window(QWidget):
         # Window Setup
         self.vbox = QVBoxLayout()
         self.vbox.addWidget(self.welcome)
+        self.vbox.addWidget(self.airboard_image)
         self.vbox.addWidget(self.app_button)
         self.vbox.addLayout(self.hbox)
         self.setLayout(self.vbox)
@@ -211,6 +218,9 @@ class Window(QWidget):
 
         elif "open" in text:
             self.on_click()
+
+        elif 'save' in text:
+            self.save_image1()
 
     @pyqtSlot()
     def clean_screen(self):

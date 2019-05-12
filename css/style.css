@@ -1,6 +1,10 @@
 QLabel{
   color: white;
   font-size: 40px;
+  font-family: "Copperplate Gothic Light";
+  font-size: 50px;
+  font-style: normal;
+  font-variant: normal;
 }
 
 QPushButton {
@@ -11,6 +15,10 @@ QPushButton {
   border-radius: 10px;
   border-width: 2px;
   background-color: rgb(0, 0, 0);
+  font-family: "Copperplate Gothic Light";
+  font-size: 50px;
+  font-style: normal;
+  font-variant: normal;
 }
 
 QPushButton:hover{
@@ -27,6 +35,10 @@ QComboBox {
   border-radius: 10px;
   border-width: 2px;
   background-color: rgb(0, 0, 0);
+  font-family: "Copperplate Gothic Light";
+  font-size: 50px;
+  font-style: normal;
+  font-variant: normal;
 }
 
 QComboBox:hover{
@@ -34,3 +46,4 @@ QComboBox:hover{
   border-color: currentColor;
   background-color: white;
 }
+s
