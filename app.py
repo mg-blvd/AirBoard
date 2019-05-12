@@ -218,6 +218,9 @@ class Window(QWidget):
         elif "open" in text:
             self.on_click()
 
+        elif 'save' in text:
+            self.save_image1()
+
     @pyqtSlot()
     def clean_screen(self):
         self.our_window.clear_everything()
