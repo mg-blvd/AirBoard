@@ -18,6 +18,7 @@ class Window(QWidget):
     def __init__(self):
         super().__init__()
         mixer.init()
+        self.setStyleSheet(open('css/style.css').read())
 
         self.our_window = DrawingWindow()
         self.voiceObject = VoiceRecord.VoiceRecord();
@@ -223,7 +224,7 @@ class Window(QWidget):
 app = QApplication(sys.argv)
 main = Window()
 p =  main.palette()
-p.setColor(main.backgroundRole(), Qt.white)
+p.setColor(main.backgroundRole(), Qt.black)
 main.setPalette(p)
 main.show()
 sys.exit(app.exec_())
