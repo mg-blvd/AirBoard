@@ -177,6 +177,11 @@ class Window(QWidget):
         text = self.voiceObject.send_text();
         print(text)
 
+        try:
+            text = text.lower()
+        except:
+            text = "error, try again" 
+
         text = text.lower()
 
         if "blue" in text:
