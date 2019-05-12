@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout,
                             QHBoxLayout, QPushButton, QComboBox, QLineEdit, QSlider)
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import pyqtSlot, Qt
 from paint import DrawingWindow
 import numpy as np
@@ -32,7 +33,7 @@ class Window(QWidget):
         self.voice_thread = threading.Thread(target=self.voice_control)
 
         # Welcome Message
-        self.welcome = QLabel("Welcome!!\nClick on the button below to access the app.")
+        self.welcome = QLabel("Welcome to:")
         self.welcome.setAlignment(Qt.AlignCenter)
         self.color_message = QLabel("Change the color of the line.")
 
@@ -62,6 +63,10 @@ class Window(QWidget):
         self.choose_color = QComboBox()
         self.choose_color.addItems(options)
         self.choose_color.currentIndexChanged.connect(self.color_chosen)
+
+        #Add image pixmap
+        self.airboard_image = QLabel()
+        self.airboard_image.setPixmap(QPixmap('AirBoard.png'))
 
         # Slider for Brush Size
         self.slider_name = QLabel("Brush Size: 2")
@@ -105,6 +110,7 @@ class Window(QWidget):
         # Window Setup
         self.vbox = QVBoxLayout()
         self.vbox.addWidget(self.welcome)
+        self.vbox.addWidget(self.airboard_image)
         self.vbox.addWidget(self.app_button)
         self.vbox.addLayout(self.hbox)
         self.setLayout(self.vbox)
