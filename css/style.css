@@ -1,11 +1,11 @@
 QLabel{
   color: white;
-  font-size: 40px;
   font-family: "Copperplate Gothic Light";
-  font-size: 50px;
   font-style: normal;
   font-variant: normal;
 }
+
+
 
 QPushButton {
   color: white;
@@ -16,7 +16,6 @@ QPushButton {
   border-width: 2px;
   background-color: rgb(0, 0, 0);
   font-family: "Copperplate Gothic Light";
-  font-size: 50px;
   font-style: normal;
   font-variant: normal;
 }
@@ -36,7 +35,6 @@ QComboBox {
   border-width: 2px;
   background-color: rgb(0, 0, 0);
   font-family: "Copperplate Gothic Light";
-  font-size: 50px;
   font-style: normal;
   font-variant: normal;
 }
