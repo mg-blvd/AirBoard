@@ -26,6 +26,8 @@ class Window(QWidget):
 
         # Window Title
         self.setWindowTitle("AirBoard")
+        self.setFixedSize(400,500)
+
         # self.drawing_message = QLabel("These are the coloring options:")
         # self.other_message = QLabel("These are all the other options:")
 
@@ -35,7 +37,7 @@ class Window(QWidget):
         # Welcome Message
         self.welcome = QLabel("Welcome to:")
         self.welcome.setAlignment(Qt.AlignCenter)
-        self.color_message = QLabel("Change the color of the line.")
+        self.color_message = QLabel("Brush Color:")
 
 
         # Button that takes you to the app.
@@ -54,7 +56,7 @@ class Window(QWidget):
         # Button to listen for save
         self.save_button1 = QPushButton("Save drawing")
         self.save_button1.clicked.connect(self.save_image1)
-        self.save_button2 = QPushButton("Save drawing with background")
+        self.save_button2 = QPushButton("Save drawing w/ background")
         self.save_button2.clicked.connect(self.save_image2)
 
 
@@ -66,9 +68,15 @@ class Window(QWidget):
 
         #Add image pixmap
         self.airboard_image = QLabel()
-        self.airboard_image.setPixmap(QPixmap('AirBoardLogo.png'))
-        self.airboard_image.setAlignment(Qt.AlignCenter)
+        
+        self.pixmap = QPixmap('AirBoardLogo.png')
+        self.pixmap = self.pixmap.scaledToWidth(400)
 
+        self.airboard_image.setPixmap(self.pixmap)
+        self.airboard_image.setAlignment(Qt.AlignCenter)
+        
+    
+    
         # Slider for Brush Size
         self.slider_name = QLabel("Brush Size: 2")
         self.slider = QSlider(Qt.Horizontal)
@@ -115,6 +123,7 @@ class Window(QWidget):
         self.vbox.addWidget(self.app_button)
         self.vbox.addLayout(self.hbox)
         self.setLayout(self.vbox)
+    
 
     @pyqtSlot()
     def on_click(self):
@@ -167,6 +176,11 @@ class Window(QWidget):
         mixer.music.play()
         text = self.voiceObject.send_text();
         print(text)
+
+        try:
+            text = text.lower()
+        except:
+            text = "error, try again"
 
         text = text.lower()
 
