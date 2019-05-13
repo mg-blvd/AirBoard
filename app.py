@@ -37,7 +37,7 @@ class Window(QWidget):
         # Welcome Message
         self.welcome = QLabel("Welcome to:")
         self.welcome.setAlignment(Qt.AlignCenter)
-        self.color_message = QLabel("Brush Color.")
+        self.color_message = QLabel("Brush Color:")
 
 
         # Button that takes you to the app.
@@ -56,7 +56,7 @@ class Window(QWidget):
         # Button to listen for save
         self.save_button1 = QPushButton("Save drawing")
         self.save_button1.clicked.connect(self.save_image1)
-        self.save_button2 = QPushButton("Save drawing with background")
+        self.save_button2 = QPushButton("Save drawing w/ background")
         self.save_button2.clicked.connect(self.save_image2)
 
 
@@ -180,7 +180,7 @@ class Window(QWidget):
         try:
             text = text.lower()
         except:
-            text = "error, try again" 
+            text = "error, try again"
 
         text = text.lower()
 
