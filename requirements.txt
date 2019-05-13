@@ -1,0 +1,12 @@
+This app requires the following libraries and packages installed on your machine:
+python 3.7.3,
+numpy ver. 1.16.3,
+open-cv ver. 3.4.2,
+pyaudio ver. 0.2.11,
+pillow ver. 6.0.0,
+pygame ver. 1.9.6,
+pyqt ver. 5.9.2,
+SpeechRecognition ver. 3.8.1,
+a webcam connected to the computer,
+A reddish-pinkish object to be tracked by the computer,
+and a stable internet connection.
