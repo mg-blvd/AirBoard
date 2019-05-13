@@ -4,7 +4,7 @@ AirBoard
 Authors
 -------
 Travis Ledo
-Aaaron Helman
+Aaron Helman
 Misael Guijarro
 Monica Barrios
 
