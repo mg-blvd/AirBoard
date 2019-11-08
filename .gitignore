@@ -2,3 +2,5 @@
 .DS_Store
 *.pyc
 __pycache__/Icon
+audio/.DS_Store
+images/.DS_Store

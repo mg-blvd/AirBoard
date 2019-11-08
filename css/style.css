@@ -1,0 +1,47 @@
+QLabel{
+  color: white;
+  font-family: "Copperplate Gothic Light";
+  font-style: normal;
+  font-variant: normal;
+}
+
+
+
+QPushButton {
+  color: white;
+  padding: 10px;
+  border-style: outset;
+  border-color: white;
+  border-radius: 10px;
+  border-width: 2px;
+  background-color: rgb(0, 0, 0);
+  font-family: "Copperplate Gothic Light";
+  font-style: normal;
+  font-variant: normal;
+}
+
+QPushButton:hover{
+  color: rgb(0,0,0);
+  border-color: currentColor;
+  background-color: white;
+}
+
+QComboBox {
+  color: white;
+  padding: 10px;
+  border-style: outset;
+  border-color: white;
+  border-radius: 10px;
+  border-width: 2px;
+  background-color: rgb(0, 0, 0);
+  font-family: "Copperplate Gothic Light";
+  font-style: normal;
+  font-variant: normal;
+}
+
+QComboBox:hover{
+  color: rgb(0,0,0);
+  border-color: currentColor;
+  background-color: white;
+}
+s
