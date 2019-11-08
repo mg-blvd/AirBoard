@@ -63,7 +63,8 @@ class DrawingWindow():
             self.hsv = cv2.cvtColor(self.frame, cv2.COLOR_BGR2HSV)
 
 
-            #Need to do a funky save image and get the size because opencv has no easy way to get resolution of video stream. Use that size of the image to set the white frame window and then replace the image with a white screen because noone wants a mugshot of themself
+            #Need to do a funky save image and get the size because opencv has no easy way to get resolution of video stream.
+            #Use that size of the image to set the white frame window and then replace the image with a white screen because noone wants a mugshot of themself
             if(self.width == 0):
                 cv2.imwrite("images/temp.jpg", self.frame)
                 im = Image.open("images/temp.jpg")

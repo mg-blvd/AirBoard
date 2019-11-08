@@ -26,7 +26,7 @@ class Window(QWidget):
 
         # Window Title
         self.setWindowTitle("AirBoard")
-        self.setFixedSize(400,500)
+        self.setFixedSize(1000, 1000)
 
         # self.drawing_message = QLabel("These are the coloring options:")
         # self.other_message = QLabel("These are all the other options:")
@@ -68,15 +68,15 @@ class Window(QWidget):
 
         #Add image pixmap
         self.airboard_image = QLabel()
-        
+
         self.pixmap = QPixmap('AirBoardLogo.png')
-        self.pixmap = self.pixmap.scaledToWidth(400)
+        self.pixmap = self.pixmap.scaledToWidth(700)
 
         self.airboard_image.setPixmap(self.pixmap)
         self.airboard_image.setAlignment(Qt.AlignCenter)
-        
-    
-    
+
+
+
         # Slider for Brush Size
         self.slider_name = QLabel("Brush Size: 2")
         self.slider = QSlider(Qt.Horizontal)
@@ -123,7 +123,7 @@ class Window(QWidget):
         self.vbox.addWidget(self.app_button)
         self.vbox.addLayout(self.hbox)
         self.setLayout(self.vbox)
-    
+
 
     @pyqtSlot()
     def on_click(self):
